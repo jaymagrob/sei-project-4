@@ -1,0 +1,60 @@
+[
+{
+  "model": "tasks.task_status",
+  "pk": 1,
+  "fields": {
+    "status": "Not Started"
+  }
+},
+{
+  "model": "tasks.task_status",
+  "pk": 2,
+  "fields": {
+    "status": "Working On It"
+  }
+},
+{
+  "model": "tasks.task_status",
+  "pk": 3,
+  "fields": {
+    "status": "Waiting For Review"
+  }
+},
+{
+  "model": "tasks.task_status",
+  "pk": 4,
+  "fields": {
+    "status": "Done"
+  }
+},
+{
+  "model": "tasks.task_status",
+  "pk": 5,
+  "fields": {
+    "status": "Need Help"
+  }
+},
+{
+  "model": "tasks.task_status",
+  "pk": 6,
+  "fields": {
+    "status": "Roadblocked"
+  }
+},
+{
+  "model": "tasks.task_status",
+  "pk": 7,
+  "fields": {
+    "status": "Iceboxed"
+  }
+},
+{
+  "model": "tasks.task_history",
+  "pk": 1,
+  "fields": {
+    "task_detail": "dfdf",
+    "task_timeStamp": "2020-02-27T13:17:41.769Z",
+    "task": 1
+  }
+}
+]
