@@ -1,9 +1,16 @@
 from rest_framework import serializers
+from boards.models import Board
 from django.contrib.auth import get_user_model
 import django.contrib.auth.password_validation as validations
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 User = get_user_model()
+
+class BoardSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Board
+        fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -29,3 +36,18 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+
+class EditUserSerializer(serializers.ModelSerializer):
+    class Meta:
+      model = User
+      fields = ('id','username', 'first_name', 'last_name', 'email', 'name','profile_image','bio','company','title')
+
+class PopulateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id','board_owned','boards_assigned','username', 'first_name', 'last_name', 'email', 'name','profile_image','bio','company','title')
+        
+class PopulateUserAndBoardsSerializer(PopulateUserSerializer):
+        board_owned = BoardSerializer(many=True)
+        boards_assigned = BoardSerializer(many=True)

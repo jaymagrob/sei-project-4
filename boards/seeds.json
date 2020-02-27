@@ -1,8 +1,8 @@
 [
 {"model":"boards.board","pk":1,"fields": {"board_name":"Arctoa Bruch & Schimp.","description":null,"image":null,"budget":null,"owner":29,"users":[1]}},
-{"model":"boards.board","pk":2,"fields": {"board_name":"Pinguicula villosa L.","description":"Etiam vel augue.","image":"http://dummyimage.com/250x250.jpg/dddddd/000000","budget":85036.88,"owner":76,"users":[1]}},
-{"model":"boards.board","pk":3,"fields": {"board_name":"Polygonum paronychia Cham. & Schltdl.","description":"Integer non velit.","image":"http://dummyimage.com/250x250.jpg/ff4444/ffffff","budget":25192.8,"owner":16,"users":[1]}},
-{"model":"boards.board","pk":4,"fields": {"board_name":"Stylophorum Nutt.","description":"Lorem ipsum dolor sit amet, consectetuer adipiscing elit.","image":"http://dummyimage.com/250x250.jpg/5fa2dd/ffffff","budget":8501.84,"owner":2,"users":[1]}},
+{"model":"boards.board","pk":2,"fields": {"board_name":"Pinguicula villosa L.","description":"Etiam vel augue.","image":"http://dummyimage.com/250x250.jpg/dddddd/000000","budget":85036.88,"owner":102,"users":[]}},
+{"model":"boards.board","pk":3,"fields": {"board_name":"Polygonum paronychia Cham. & Schltdl.","description":"Integer non velit.","image":"http://dummyimage.com/250x250.jpg/ff4444/ffffff","budget":25192.8,"owner":16,"users":[102]}},
+{"model":"boards.board","pk":4,"fields": {"board_name":"Stylophorum Nutt.","description":"Lorem ipsum dolor sit amet, consectetuer adipiscing elit.","image":"http://dummyimage.com/250x250.jpg/5fa2dd/ffffff","budget":8501.84,"owner":2,"users":[1,102]}},
 {"model":"boards.board","pk":5,"fields": {"board_name":"Caloplaca litoricola Brodo","description":"Praesent id massa id nisl venenatis lacinia.","image":"http://dummyimage.com/250x250.jpg/ff4444/ffffff","budget":50815.79,"owner":42,"users":[1]}},
 {"model":"boards.board","pk":6,"fields": {"board_name":"Machaeranthera pi]","description":"Nam nulla.","image":"http://dummyimage.com/250x250.jpg/dddddd/000000","budget":50347.33,"owner":94,"users":[1]}},
 {"model":"boards.board","pk":7,"fields": {"board_name":"Frasera puberulenta Davidson","description":"Maecenas tincidunt lacus at velit.","image":"http://dummyimage.com/250x250.jpg/ff4444/ffffff","budget":4061.58,"owner":90,"users":[1]}},

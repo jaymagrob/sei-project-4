@@ -11,9 +11,6 @@ class Board(models.Model):
     owner = models.ForeignKey(User, related_name='board_owned', null=False, on_delete=models.CASCADE, default=1)
     users = models.ManyToManyField(User, related_name='boards_assigned', blank=True)
     
-    
-    
-
     def __str__(self):
       return f'Board: {self.board_name}'
 
