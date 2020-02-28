@@ -5,7 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from django.conf import settings
 import jwt
-from .serializers import UserSerializer, PopulateUserAndBoardsSerializer, PopulateUserSerializer, EditUserSerializer
+from .serializers import UserSerializer, PopulateUserAndBoardsSerializer, PopulateUserSerializer, EditUserSerializer, SearchUserSerializer
 User = get_user_model()
 
 class RegisterView(APIView):
@@ -64,3 +64,10 @@ class ProfileView(APIView):
         return Response(status=HTTP_204_NO_CONTENT)
       except User.DoesNotExist:
         return  Response({'message': 'UNAUTHORIZED'}, status=HTTP_401_UNAUTHORIZED)
+
+class UserView(APIView):
+    def get(self, request):
+      users = User.objects.all()
+      serialized_user = SearchUserSerializer(users, many=True)
+
+      return Response(serialized_user.data)

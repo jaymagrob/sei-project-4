@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_204_NO_CONTENT, HTTP_202_ACCEPTED, HTTP_401_UNAUTHORIZED
 
 from .models import Board, Board_Comment
-from .serializers import BoardSerializer, PopulatedBoardSerializer, CommentSerializer
+from .serializers import BoardSerializer, PopulatedBoardSerializer, CommentSerializer, UserSerializer
 
 class BoardListView(APIView): 
 
@@ -18,11 +18,13 @@ class BoardListView(APIView):
         print(request.user)
         if request.user.is_anonymous:
             return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
-        board = BoardSerializer(data=request.data)
+        request.data['owner'] = request.user.pk
+        board = BoardSerializer(data=request.data)      
         if board.is_valid():
             board.save()
             return Response(board.data, status=HTTP_201_CREATED)
         return Response(board.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+
 
 class BoardDetailView(APIView): 
 

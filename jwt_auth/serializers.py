@@ -43,6 +43,12 @@ class EditUserSerializer(serializers.ModelSerializer):
       model = User
       fields = ('id','username', 'first_name', 'last_name', 'email', 'name','profile_image','bio','company','title')
 
+class SearchUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id','username', 'first_name', 'last_name', 'email', 'name','profile_image')
+        
+
 class PopulateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
