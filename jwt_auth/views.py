@@ -5,6 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from django.conf import settings
 import jwt
+from datetime import datetime, timedelta
 from .serializers import UserSerializer, PopulateUserAndBoardsSerializer, PopulateUserSerializer, EditUserSerializer, SearchUserSerializer
 User = get_user_model()
 
@@ -34,8 +35,8 @@ class LoginView(APIView):
         user = self.get_user(email)
         if not user.check_password(password):
             raise PermissionDenied({'message': 'Invalid credentials'})
-
-        token = jwt.encode({'sub': user.id}, settings.SECRET_KEY, algorithm='HS256')
+        dt = datetime.now() + timedelta(days=7)
+        token = jwt.encode({'sub': user.id, 'exp': int(dt.strftime('%s'))}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
 
 class ProfileView(APIView):

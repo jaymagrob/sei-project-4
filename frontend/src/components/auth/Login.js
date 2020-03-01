@@ -21,21 +21,16 @@ class Login extends React.Component {
     e.preventDefault()
     try {
       const res = await axios.post('/api/login', this.state.data, headers)
-      console.log(res.data)
       Auth.setToken(res.data.token)
-      console.log('token =', res.data.token)
-      console.log(res.data.firstLogin)
-      if (res.data.firstLogin) {
-        this.props.history.push('/getstarted')
-      } else {
-        this.props.history.push('/discovery')
-      }
+      this.props.history.push('/discovery')
+      
     } catch (err) {
       this.setState({ error: 'Invalid Credentials' })
     }
   }
 
   render() {
+    console.log(Auth.isAuthenticated())
     return (
       <section className="is-fullheight-with-navbar hero section_padding">
       <div className="hero-body columns is-fullwidth">

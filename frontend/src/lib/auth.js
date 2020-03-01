@@ -1,14 +1,17 @@
 class Auth {
-  
   static setToken(token) {
+    console.log(token)
     localStorage.setItem('token', token)
+    console.log('set')
   }
   static getToken() {
     return localStorage.getItem('token')
   }
+
   static logout() {
     localStorage.removeItem('token')
   }
+  
   static getPayload() {
     const token = this.getToken()
     if (!token) return false
@@ -23,5 +26,4 @@ class Auth {
     return now < payload.exp
   }
 }
-
 export default Auth
