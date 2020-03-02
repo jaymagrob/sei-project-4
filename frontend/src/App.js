@@ -10,9 +10,13 @@ import Auth from './lib/auth'
 
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
-import Sidebar from './components/common/Sidebar'
+import Sidebar from './components/board/Sidebar'
+import NewBoard from './components/board/NewBoard'
+import Board from './components/board/Board'
 import Error404 from './components/common/Error404'
 import Navbar from './components/common/Nav'
+import About from './components/common/About'
+import Home from './components/common/Home'
 import Profile from './components/user/Profile'
 import ProfileEdit from './components/user/ProfileEdit'
 import SecureRoute from './components/security/SecureRoute'
@@ -23,14 +27,23 @@ function App() {
     <BrowserRouter>
       <main>
         <Navbar />
-        {/* <Sidebar /> */}
-        <Switch>
-          <Route path="/profile/edit" component={ProfileEdit} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
-          <Route path="/*" component={Error404} />
-        </Switch>
+        <section className="hero is-info is-fullheight-with-navbar">          
+            <div className="columns">                                        
+              <div className="column">
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/project/new" component={NewBoard} />
+                  <Route path="/project/:id" component={Board} />
+                  <Route path="/profile/edit" component={ProfileEdit} />
+                  <Route path="/profile" component={Profile} />
+                  <Route path="/about" component={About} />
+                  <Route path="/register" component={Register} />
+                  <Route path="/login" component={Login} />
+                  <Route path="/*" component={Error404} />
+                </Switch>
+              </div>
+            </div>
+        </section>
       </main>
     </BrowserRouter>    
   );

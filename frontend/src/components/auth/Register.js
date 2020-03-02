@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 class Register extends React.Component {
   state = {
@@ -17,8 +18,6 @@ class Register extends React.Component {
     const data = { ...this.state.data, [e.target.name]: e.target.value }
     const errors = { ...this.state.errors, [e.target.name]: '' }
     this.setState({ data, errors })
-    console.log('const data =', data)
-    console.log('state =', this.state.data)
   }
 
   handleSubmit = async e => {
@@ -29,8 +28,7 @@ class Register extends React.Component {
     }
     try {
       await axios.post('/api/register', userData)
-      // this.props.history.push('/login')
-      console.log('yeah')
+      this.props.history.push('/login')
     } catch (err) {
       const { password, password_confirmation, username, email, name } = err.response.data
       const errorObj = {
@@ -40,7 +38,6 @@ class Register extends React.Component {
         password: !password ? null : password[0],
         password_confirmation: !password_confirmation ? null : password_confirmation[0]
       }
-      console.log(errorObj)
       this.setState({ errors: errorObj })
     }
   }
@@ -129,7 +126,7 @@ class Register extends React.Component {
               </div>
             </div> 
             <div className="mr-6">
-              <p>Already a member? Login !!!!!!ADD LOGIN LINK</p>
+              <p>Already a member? <Link to="/login">Login here</Link></p>
             </div>            
           </form>
         </div>

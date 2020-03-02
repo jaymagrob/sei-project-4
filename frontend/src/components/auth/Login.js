@@ -22,7 +22,7 @@ class Login extends React.Component {
     try {
       const res = await axios.post('/api/login', this.state.data, headers)
       Auth.setToken(res.data.token)
-      this.props.history.push('/discovery')
+      this.props.history.push('/')
       
     } catch (err) {
       this.setState({ error: 'Invalid Credentials' })

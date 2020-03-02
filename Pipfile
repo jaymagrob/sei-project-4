@@ -12,6 +12,8 @@ djangorestframework = "*"
 psycopg2-binary = "*"
 pyjwt = "*"
 django-cors-headers = "*"
+pip = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"

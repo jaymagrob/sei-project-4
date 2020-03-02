@@ -16,6 +16,8 @@ class Navbar extends React.Component {
 
   handleLogout = () => {
     Auth.logout()
+    this.props.history.push('/')
+
   }
   
   render() {
@@ -23,7 +25,7 @@ class Navbar extends React.Component {
 
     return (
       <nav className="navbar custom_nav">
-        <div className="navbar-brand navbar-item-font navbar-logo">
+        <div className="navbar-brand navbar-logo">
           <Link className="navbar-brand navbar-item" onClick={this.handleClick} to="/">Skarpa</Link>          
           <a className={`navbar-burger ${navbarOpen ? 'is-active' : ''}`} onClick={this.toggleNavbar}>
             <span aria-hidden="true"></span>
@@ -34,37 +36,33 @@ class Navbar extends React.Component {
 
 
         <div className={`navbar-menu ${navbarOpen ? 'is-active' : ''}`}>
-          <div className="navbar-item navbar-end navbar-item-font">
-            {Auth.isAuthenticated() && <Link onClick={this.handleClick} to="/projects/new">new project</Link>}
+          <div className="navbar-item navbar-end">
+            {Auth.isAuthenticated() &&
+            <>
+              <div className="navbar-item">
+                <Link onClick={this.handleClick} to="/profile/edit">EDIT PROFILE</Link>
+              </div>
+              <div className="navbar-item">
+                <a onClick={this.handleLogout}>LOGOUT {this.state.name}</a>
+              </div>
+            </>
+            }
           </div>
-          <div className="navbar-item navbar-item-font">
-            <Link onClick={this.handleClick} to="/search">start your journey</Link>
-          </div>
-          {Auth.isAuthenticated() &&
-          <div className="navbar-item navbar-item-font">
-            <Link onClick={this.handleClick} to={`/users/${this.state.username}`}>my portfolio</Link>
-          </div>
-          }
-
-          {Auth.isAuthenticated() &&
-          <div className="navbar-item navbar-item-font">
-            <Link className="button" to="/mail">Mail</Link>
-          </div>
-          }
-          
-          <div className="navbar-item navbar-item-font">
-            <button className="button" onClick={this.handleLogout}>logout {this.state.name}</button>
-          </div>
-          
+                    
           {!Auth.isAuthenticated() &&
-          <div className="navbar-item navbar-item-font">
-            <Link onClick={this.handleClick} to="/register">register</Link>
+          <>
+          <div className="navbar-item">
+            <Link onClick={this.handleClick} to="/about">SKARPA</Link>
           </div>
-          }
-          {!Auth.isAuthenticated() && 
-          <div className="navbar-item navbar-item-font">
-            <Link onClick={this.handleClick} to="/login">login</Link>
+
+          <div className="navbar-item">
+            <Link onClick={this.handleClick} to="/register">REGISTER</Link>
           </div>
+      
+          <div className="navbar-item">
+            <Link onClick={this.handleClick} to="/login">LOGIN</Link>
+          </div>
+          </>
           }
         </div>
       </nav>

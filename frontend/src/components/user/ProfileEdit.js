@@ -28,7 +28,7 @@ class ProfileEdit extends React.Component {
 
   // handleSubmit = async e => {
   //   e.preventDefault()
-  //   const userData = { ...this.state.data, 
+  //   const useraData = { ...this.state.data, 
   //     profileImage: 'https://discountdoorhardware.ca/wp-content/uploads/2018/06/profile-placeholder-3.jpg',
   //     bio: 'Click edit portfolio to get started editing your profile!',
   //   }

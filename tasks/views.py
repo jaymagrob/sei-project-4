@@ -8,6 +8,11 @@ from .models import Task, Task_Comment, Task_History, Task_Status
 from .serializers import TaskSerializer, CommentTaskSerializer, PopulatedTaskSerializer
 
 class TaskListView(APIView):
+  def get(self, _request, fk):
+    tasks = Task.objects.filter(board=fk)
+    serializer = TaskSerializer(tasks, many=True)
+    return Response(serializer.data)
+
   def post(self, request, fk):
     # fk = foreign key - the id of the board that's attached
     try:
