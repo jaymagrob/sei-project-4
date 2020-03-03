@@ -43,8 +43,33 @@ class Task extends React.Component {
     this.setState({ newTask })
   }
 
+  handleChange = e => {
+    const findTask = this.state.tasks.filter(i => i.id === parseInt(e.target.id))[0]
+    const editTask = {...findTask, [e.target.name]: e.target.value}
+    const tasks = this.state.tasks.map(i => (i.id === parseInt(e.target.id)) ? editTask : i)
+    this.setState({ tasks })
+  
+  }
+
+  handleSubmit = async e => {
+    
+    try {
+      const id = this.props.boardId
+      const taskId = e.target.id
+      const findTask = this.state.tasks.filter(i => i.id === parseInt(e.target.id))[0]
+      const res = await axios.put(`/api/tasks/${id}/task/${taskId}/`, findTask, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+    } catch (err) {
+      console.log(err)
+    }
+
+
+  }
+
   handleNewSubmit = async e => {
     e.preventDefault()
+    console.log(Auth.getToken())
     try {
       const id = this.props.boardId
       const res = await axios.post(`/api/tasks/${id}/task/`, this.state.newTask, {
@@ -58,21 +83,94 @@ class Task extends React.Component {
   }
 
   render() {
-    console.log(this.props.boardId)
     return (
       <>
         <h2 className="subtitle">Tasks</h2>
-        {this.state.tasks.map(task => (
+        {this.state.tasks.map((task, ind) => (
           <div key={task.id} className='box'>
             <div className="tile is-ancestor">
               <div className="tile is-parent">
               <article className="tile is-child box">
-                <p className="">{task.task_name}</p>          
+                <input
+                  className='input'
+                  placeholder="Task Name"
+                  name="task_name"
+                  id={task.id}
+                  value={this.state.tasks[ind].task_name}
+                  onChange={this.handleChange}
+                  onBlur={this.handleSubmit}
+                />
               </article>
               </div>
+
+              <div className="tile is-parent">
+              <article className="tile is-child box">
+                <div className="select is-hover">
+                  <select>
+                    <option value='1'>Not Started</option>
+                    <option value='2'>Working On It</option>
+                    <option value='3'>Waiting For Review</option>
+                    <option value='4'>Done</option>
+                    <option value='5'>Need Help</option>
+                    <option value='6'>Roadblocked</option>
+                    <option value='7'>Iceboxed</option>
+                  </select>
+                </div>
+              </article>
+              </div>
+
+              <div className="tile is-parent">
+              <article className="tile is-child box">
+                <input
+                    type='date'
+                    className='input'
+                    placeholder="Date"
+                    name="start_date"
+                    id={task.id}
+                    value={this.state.tasks[ind].start_date}
+                    onChange={this.handleChange}
+                    onBlur={this.handleSubmit}
+                  />        
+              </article>
+              </div>
+
+              <div className="tile is-parent">
+              <article className="tile is-child box">
+                <input
+                    type='date'
+                    className='input'
+                    placeholder="Date"
+                    name="end_date"
+                    id={task.id}
+                    value={this.state.tasks[ind].end_date}
+                    onChange={this.handleChange}
+                    onBlur={this.handleSubmit}
+                  />        
+              </article>
+              </div>
+
+              <div className="tile is-parent">
+              <article className="tile is-child box">
+              <div className="select is-hover">
+                  <select>                  
+                    {this.props.users.map(user => (
+                      <option value={user.value}>{user.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </article>
+              </div>
+
+              
+
+
             </div>
           </div>
         ))}
+
+
+
+
         <h2 className="subtitle">New Task</h2>
           <div className='box'>
           <form

@@ -6,7 +6,6 @@ import Task from './Task'
 
 const BoardDetail = ({ boardId, tasks, users, handleMultiChange, board, handleChange, handleSubmit, defaultUser = this.props}) => (
   <section>
-    {console.log('HI',defaultUser)}
     <div className="control">
       <input
         className='input'
@@ -53,6 +52,7 @@ const BoardDetail = ({ boardId, tasks, users, handleMultiChange, board, handleCh
 
     <Task
       boardId={boardId}
+      users={defaultUser}
     />
 
   </section>

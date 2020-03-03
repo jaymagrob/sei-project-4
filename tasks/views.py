@@ -17,7 +17,7 @@ class TaskListView(APIView):
     # fk = foreign key - the id of the board that's attached
     try:
       board = Board.objects.get(pk=fk)
-      print(board.users)
+      print(request.user)
       if request.user != board.owner and request.user not in board.users.all():
           return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)          
       request.data['owner'] = request.user.pk
@@ -37,6 +37,7 @@ class TaskDetailView(APIView):
     try:
       task = Task.objects.get(pk=pk)
       board = Board.objects.get(pk=fk)
+      print(request.user)
       if request.user != board.owner and request.user not in board.users.all():
           return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)
       updated_taks = TaskSerializer(task, data=request.data)
