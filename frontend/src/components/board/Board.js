@@ -5,6 +5,8 @@ import Auth from '../../lib/auth'
 import Select from 'react-select'
 import Sidebar from './Sidebar'
 import BoardDetail from './BoardDetail'
+import CommentBoard from './CommentBoard'
+
 
 class Board extends React.Component {
   state = {
@@ -12,11 +14,12 @@ class Board extends React.Component {
     boards: [],
     users: [],
     tasks: [],
-    defaultUser: []
+    defaultUser: [],
+    comments: [],
+    comment: 'Add a comment...',
+    modal: false
   }
   
-
-
   async componentDidMount() {
     try {
       const id = this.props.match.params.id
@@ -63,6 +66,16 @@ class Board extends React.Component {
       console.log('sdfsdfd',err)
     }
 
+    try {
+      const id = this.props.match.params.id
+      const res = await axios.get(`/api/boards/${id}/comment/`, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      console.log('sdfsdfsfsdfsf',res.data)
+      this.setState({comments: res.data})
+    } catch (err) {
+      console.log('sdfsdfd',err)
+    }
 
   }
 
@@ -102,23 +115,91 @@ class Board extends React.Component {
     }
   }
 
+  refreshComments = async() => {
+    try {
+      const id = this.props.match.params.id
+      const res = await axios.get(`/api/boards/${id}/comment/`, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      console.log('sdfsdfsfsdfsf',res.data)
+      this.setState({comments: res.data})
+    } catch (err) {
+      console.log('sdfsdfd',err)
+    }
+  }
+
+  
+
   handleChange = e => {
     const board = { ...this.state.board, [e.target.name]: e.target.value }
     this.setState({ board })
-    console.log('state',this.state.board)
   }
 
   handleMultiChange = (e) => {
     const lookingFor = e ? e.map(item => item.value) : []
     const newData = { ...this.state.board, users: lookingFor }
     this.setState({ board: newData, defaultUser: e})
-    console.log(this.state)
   }
+
+  handleModal = e => {
+    if(e.target.innerHTML === 'Comments') {
+      this.setState({modal: true})
+    } else {
+      this.setState({modal: false})
+    }
+  }
+
+  handleDelete = async e => {
+      try {
+        const id = this.props.match.params.id
+        const commentId = parseInt(e.target.id)
+        const res = await axios.delete(`/api/boards/${id}/comment/${commentId}/`, {
+          headers: { Authorization: `Bearer ${Auth.getToken()}` }
+        })
+        this.refreshComments()
+      } catch (err) {
+        console.log(err)
+      }
+  }
+  
+  handleAddComment = async e => {
+    e.preventDefault()
+      try {
+        const id = this.props.match.params.id
+        const data = {
+          comment: this.state.comment
+        }
+        const res = await axios.post(`/api/boards/${id}/comment/`, data, {
+          headers: { Authorization: `Bearer ${Auth.getToken()}` }
+        })
+        this.refreshComments()
+      } catch (err) {
+        console.log(err)
+      }
+  }
+
+  handleChangeComment = e => {
+    this.setState({ comment: e.target.value })
+  }
+  
 
   render() {
     return (
       <div class="columns">
         <div class="column">
+        <button
+          className="button"
+          onClick={this.handleModal}
+        >Comments</button>
+        <CommentBoard
+          modal={this.state.modal}
+          comments={this.state.comments}
+          handleModal={this.handleModal}
+          handleDelete={this.handleDelete}
+          handleAddComment={this.handleAddComment}
+          comment={this.state.comment}
+          handleChangeComment={this.handleChangeComment}
+        />
         <BoardDetail
           board={this.state.board}
           users={this.state.users}

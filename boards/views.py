@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_204_NO_CONTENT, HTTP_202_ACCEPTED, HTTP_401_UNAUTHORIZED
 
 from .models import Board, Board_Comment
-from .serializers import BoardSerializer, PopulatedBoardSerializer, CommentSerializer, UserSerializer
+from .serializers import BoardSerializer, PopulatedBoardSerializer, CommentSerializer, UserSerializer, PopulatedCommentSerializer
 
 class BoardListView(APIView): 
 
@@ -65,6 +65,20 @@ class BoardDetailView(APIView):
 
 
 class CommentListView(APIView):
+
+    def get(self, request, pk):
+        try:
+          board = Board.objects.get(pk=pk)
+          if request.user != board.owner and request.user not in board.users.all():
+              return Response({'message': 'Unauthorized'}, status=HTTP_401_UNAUTHORIZED)          
+          comments = Board_Comment.objects.filter(board=pk)
+          serializer = PopulatedCommentSerializer(comments, many=True)
+          return Response(serializer.data)
+        except Board.DoesNotExist:
+            return  Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
+
+        return Response(serializer.data)
+
 
     def post(self, request, pk):
       try:

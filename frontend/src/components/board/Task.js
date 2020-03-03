@@ -11,6 +11,14 @@ class Task extends React.Component {
     tasks: [],
     newTask: {
       task_name:  "Add New Task"
+    },
+    showColumns: {
+      task_name: true,
+      status: true,
+      start_date: true,
+      end_date: true,
+      users: true,
+      delete: true
     }
   }
 
@@ -76,7 +84,7 @@ class Task extends React.Component {
       const res = await axios.post(`/api/tasks/${id}/task/`, this.state.newTask, {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
-      this.setState({task_name: "Add New Task"})
+      this.setState({newTask : {task_name: "Add New Task"}})
       this.refreshTask()
     } catch (err) {
       console.log(err)
@@ -97,16 +105,77 @@ class Task extends React.Component {
     }
   }
 
-  
+  handleColumns = e => {
+    const showColumns = {...this.state.showColumns, [e.target.name]: !this.state.showColumns[e.target.name]}
+    this.setState( {showColumns} )
+  }
 
   render() {
     return (
       <>
+        <div>
+        <label class="checkbox">
+          <input 
+          name="task_name"
+          checked={this.state.showColumns.task_name}      
+          onClick={this.handleColumns}
+          type="checkbox"/>
+            task_name
+          </label>
+
+          <label class="checkbox">
+          <input 
+          name="status"
+          checked={this.state.showColumns.status}
+          onClick={this.handleColumns}
+          type="checkbox"/>
+            status
+          </label>
+
+          <label class="checkbox">
+          <input 
+          name="start_date"
+          checked={this.state.showColumns.start_date}
+          onClick={this.handleColumns}
+          type="checkbox"/>
+            start_date
+          </label>
+
+          <label class="checkbox">
+          <input 
+          name="end_date"
+          checked={this.state.showColumns.end_date}
+          onClick={this.handleColumns}
+          type="checkbox"/>
+            end_date
+          </label>
+
+          <label class="checkbox">
+          <input 
+          name="users"
+          checked={this.state.showColumns.users}
+          onClick={this.handleColumns}
+          type="checkbox"/>
+            users
+          </label>
+
+          <label class="checkbox">
+          <input 
+          name="delete"
+          checked={this.state.showColumns.delete}
+          onClick={this.handleColumns}
+          type="checkbox"/>
+            delete
+          </label>
+        </div>
+
+
+
         <h2 className="subtitle">Tasks</h2>
         {this.state.tasks.map((task, ind) => (
           <div key={task.id} className='box'>
             <div className="tile is-ancestor">
-              <div className="tile is-parent">
+              <div className={`tile is-parent ${(!this.state.showColumns.task_name) ? 'is-hidden' : null}`}>
               <article className="tile is-child box">
                 <input
                   className='input'
@@ -120,7 +189,7 @@ class Task extends React.Component {
               </article>
               </div>
 
-              <div className="tile is-parent">
+              <div className={`tile is-parent ${(!this.state.showColumns.status) ? 'is-hidden' : null}`}>
               <article className="tile is-child box">
                 <div className="select is-hover">
                   <select
@@ -145,7 +214,7 @@ class Task extends React.Component {
               </article>
               </div>
 
-              <div className="tile is-parent">
+              <div className={`tile is-parent ${(!this.state.showColumns.start_date) ? 'is-hidden' : null}`}>
               <article className="tile is-child box">
                 <input
                     type='date'
@@ -160,7 +229,7 @@ class Task extends React.Component {
               </article>
               </div>
 
-              <div className="tile is-parent">
+              <div className={`tile is-parent ${(!this.state.showColumns.end_date) ? 'is-hidden' : null}`}>
               <article className="tile is-child box">
                 <input
                     type='date'
@@ -175,7 +244,7 @@ class Task extends React.Component {
               </article>
               </div>
 
-              <div className="tile is-parent">
+              <div className={`tile is-parent ${(!this.state.showColumns.users) ? 'is-hidden' : null}`}>
               <article className="tile is-child box">
               <div className="select is-hover">
                   <select
@@ -199,7 +268,7 @@ class Task extends React.Component {
               </article>
               </div>
 
-              <div className="tile is-parent">
+              <div className={`tile is-parent ${(!this.state.showColumns.delete) ? 'is-hidden' : null}`}>
               <article className="tile is-child box">
                 <button
                     className='button'
