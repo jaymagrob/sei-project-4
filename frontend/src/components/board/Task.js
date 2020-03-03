@@ -83,6 +83,22 @@ class Task extends React.Component {
     }
   }
 
+  handleDeleteTask = async e => {
+    e.preventDefault()
+    try {
+      const id = this.props.boardId
+      const taskId = e.target.id
+      const res = await axios.delete(`/api/tasks/${id}/task/${taskId}/`, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      this.refreshTask()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  
+
   render() {
     return (
       <>
@@ -183,7 +199,15 @@ class Task extends React.Component {
               </article>
               </div>
 
-              
+              <div className="tile is-parent">
+              <article className="tile is-child box">
+                <button
+                    className='button'
+                    id={task.id}
+                    onClick={this.handleDeleteTask}
+                  >Delete Task</button>   
+              </article>
+              </div>
 
 
             </div>
@@ -217,7 +241,6 @@ class Task extends React.Component {
                 <div class="control">
                 <button class="button is-primary">Submit</button>
               </div>
-
         </div>
       </article>
     </div>       
