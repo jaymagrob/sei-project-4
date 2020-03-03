@@ -15,7 +15,7 @@ class Task_Status(models.Model):
 class Task(models.Model):
     task_name = models.CharField(max_length=50)
     task_description = models.CharField(max_length=500, null=True)
-    start_date = models.DateField()
+    start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
     group = models.CharField(max_length=50, null=True)
     status = models.ForeignKey(Task_Status, related_name='task', on_delete=models.SET_NULL, null=True)

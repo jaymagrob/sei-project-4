@@ -14,6 +14,8 @@ import Sidebar from './components/board/Sidebar'
 import NewBoard from './components/board/NewBoard'
 import Board from './components/board/Board'
 import Error404 from './components/common/Error404'
+import Unauthorised from './components/common/Unauthorised'
+import Logout from './components/common/Logout'
 import Navbar from './components/common/Nav'
 import About from './components/common/About'
 import Home from './components/common/Home'
@@ -27,7 +29,7 @@ function App() {
     <BrowserRouter>
       <main>
         <Navbar />
-        <section className="hero is-info is-fullheight-with-navbar">          
+        <section className="hero is-dark is-fullheight-with-navbar">          
             <div className="columns">                                        
               <div className="column">
                 <Switch>
@@ -39,6 +41,8 @@ function App() {
                   <Route path="/about" component={About} />
                   <Route path="/register" component={Register} />
                   <Route path="/login" component={Login} />
+                  <Route path="/logout" component={Logout} />
+                  <Route path="/unauthorised" component={Unauthorised} />
                   <Route path="/*" component={Error404} />
                 </Switch>
               </div>

@@ -4,8 +4,9 @@ import Auth from '../../lib/auth'
 import Select from 'react-select'
 import Task from './Task'
 
-const BoardDetail = ({tasks, users, handleMultiChange, board, handleChange, handleSubmit = this.props}) => (
+const BoardDetail = ({ boardId, tasks, users, handleMultiChange, board, handleChange, handleSubmit, defaultUser = this.props}) => (
   <section>
+    {console.log('HI',defaultUser)}
     <div className="control">
       <input
         className='input'
@@ -42,6 +43,7 @@ const BoardDetail = ({tasks, users, handleMultiChange, board, handleChange, hand
       <div className="control">        
         <Select
           options={users}
+          value={defaultUser}        
           isMulti          
           onChange={(e) => handleMultiChange(e)}
           onBlur={handleSubmit}
@@ -50,7 +52,7 @@ const BoardDetail = ({tasks, users, handleMultiChange, board, handleChange, hand
     </div>
 
     <Task
-      tasks={tasks}
+      boardId={boardId}
     />
 
   </section>

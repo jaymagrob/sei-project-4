@@ -12,7 +12,10 @@ class Board extends React.Component {
     boards: [],
     users: [],
     tasks: [],
+    defaultUser: []
   }
+  
+
 
   async componentDidMount() {
     try {
@@ -22,7 +25,7 @@ class Board extends React.Component {
       })
       this.setState({board: res.data})
     } catch (err) {
-      console.log(err)
+      this.props.history.push('/unauthorised')
     }
 
     try {
@@ -41,7 +44,10 @@ class Board extends React.Component {
       const users = res.data.map(user => (
         { value: user.id, label: user.name }
       ))
-      this.setState({ users })
+      const defaultUser = users.filter(user =>(
+        this.state.board.users.indexOf(user.value) !== -1 || this.state.board.owner == user.value
+      ))       
+      this.setState({ users, defaultUser })
     } catch (err) {
       console.log(err)
     }
@@ -105,26 +111,23 @@ class Board extends React.Component {
   handleMultiChange = (e) => {
     const lookingFor = e ? e.map(item => item.value) : []
     const newData = { ...this.state.board, users: lookingFor }
-    this.setState({ board: newData  })
+    this.setState({ board: newData, defaultUser: e})
+    console.log(this.state)
   }
 
   render() {
-    console.log(this.state)
     return (
       <div class="columns">
-      <div class="column is-one-quarter">
-        <Sidebar 
-          boards={this.state.boards}
-        />
-      </div>
-      <div class="column">
+        <div class="column">
         <BoardDetail
           board={this.state.board}
           users={this.state.users}
+          defaultUser={this.state.defaultUser}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           handleMultiChange={this.handleMultiChange}
           tasks={this.state.tasks}
+          boardId={this.props.match.params.id}
         />
       </div>      
     </div>

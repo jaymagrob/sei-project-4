@@ -16,7 +16,7 @@ class Navbar extends React.Component {
 
   handleLogout = () => {
     Auth.logout()
-    this.props.history.push('/')
+    this.props.history.push('/logout')
 
   }
   
@@ -39,6 +39,9 @@ class Navbar extends React.Component {
           <div className="navbar-item navbar-end">
             {Auth.isAuthenticated() &&
             <>
+              <div className="navbar-item">
+                <Link onClick={this.handleClick} to="/">SELECT PROJECT</Link>
+              </div>
               <div className="navbar-item">
                 <Link onClick={this.handleClick} to="/profile/edit">EDIT PROFILE</Link>
               </div>
