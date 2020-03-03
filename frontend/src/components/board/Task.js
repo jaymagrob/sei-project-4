@@ -44,8 +44,9 @@ class Task extends React.Component {
   }
 
   handleChange = e => {
+    let targetValue = (e.target.name === 'users') ? [e.target.value] : e.target.value
     const findTask = this.state.tasks.filter(i => i.id === parseInt(e.target.id))[0]
-    const editTask = {...findTask, [e.target.name]: e.target.value}
+    const editTask = {...findTask, [e.target.name]: targetValue}
     const tasks = this.state.tasks.map(i => (i.id === parseInt(e.target.id)) ? editTask : i)
     this.setState({ tasks })
   
@@ -55,7 +56,7 @@ class Task extends React.Component {
     
     try {
       const id = this.props.boardId
-      const taskId = e.target.id
+      const taskId = e.target.id      
       const findTask = this.state.tasks.filter(i => i.id === parseInt(e.target.id))[0]
       const res = await axios.put(`/api/tasks/${id}/task/${taskId}/`, findTask, {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
@@ -106,7 +107,16 @@ class Task extends React.Component {
               <div className="tile is-parent">
               <article className="tile is-child box">
                 <div className="select is-hover">
-                  <select>
+                  <select
+                    type='date'
+                    className='input'
+                    placeholder="Date"
+                    name="status"
+                    id={task.id}
+                    value={this.state.tasks[ind].status}
+                    onChange={this.handleChange}
+                    onBlur={this.handleSubmit}
+                  >
                     <option value='1'>Not Started</option>
                     <option value='2'>Working On It</option>
                     <option value='3'>Waiting For Review</option>
@@ -152,8 +162,20 @@ class Task extends React.Component {
               <div className="tile is-parent">
               <article className="tile is-child box">
               <div className="select is-hover">
-                  <select>                  
-                    {this.props.users.map(user => (
+                  <select
+                  
+                    type='date'
+                    className='input'
+                    placeholder="Date"
+                    name="users"
+                    id={task.id}
+                    value={this.state.tasks[ind].users[0]}
+                    onChange={this.handleChange}
+                    onBlur={this.handleSubmit}
+                  >
+
+                      <option value={null}>Not Assigned</option>            
+                      {this.props.users.map(user => (
                       <option value={user.value}>{user.label}</option>
                     ))}
                   </select>
