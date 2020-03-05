@@ -186,11 +186,13 @@ class Board extends React.Component {
   render() {
     return (
       <div class="columns">
-        <div class="column">
+        <div class="column"></div>
+        <div class='column is-three-quarters-desktop has-background-info box'>
         <button
-          className="button"
+          className="button is-round is-warning"
           onClick={this.handleModal}
-        >Comments</button>
+          >Comments</button>
+          
         <CommentBoard
           modal={this.state.modal}
           comments={this.state.comments}
@@ -209,8 +211,10 @@ class Board extends React.Component {
           handleMultiChange={this.handleMultiChange}
           tasks={this.state.tasks}
           boardId={this.props.match.params.id}
+          modal={this.handleModal}
         />
-      </div>      
+      </div>
+      <div class="column"></div>  
     </div>
     )
   }

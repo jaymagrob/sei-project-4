@@ -1,16 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
-import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Notifications, { notify } from 'react-notify-toast'
-import axios from 'axios'
-import 'bulma';
-import './App.css';
-import Auth from './lib/auth'
-
+import 'bulma'
+import 'cool-checkboxes-for-bulma.io'
+import './sass/main.scss'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
-import Sidebar from './components/board/Sidebar'
 import NewBoard from './components/board/NewBoard'
 import Board from './components/board/Board'
 import Error404 from './components/common/Error404'
@@ -21,15 +15,14 @@ import About from './components/common/About'
 import Home from './components/common/Home'
 import Profile from './components/user/Profile'
 import ProfileEdit from './components/user/ProfileEdit'
-import SecureRoute from './components/security/SecureRoute'
-import UnSecureRoute from './components/security/UnsecureRoute'
+
 
 function App() {
   return (
     <BrowserRouter>
       <main>
         <Navbar />
-        <section className="hero is-dark is-fullheight-with-navbar">          
+        <section className="hero is-primary is-fullheight-with-navbar">          
             <div className="columns">                                        
               <div className="column">
                 <Switch>

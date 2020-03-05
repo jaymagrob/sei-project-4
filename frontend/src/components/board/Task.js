@@ -167,6 +167,8 @@ class Task extends React.Component {
           type="checkbox"/>
             delete
           </label>
+
+
         </div>
 
 
@@ -176,7 +178,7 @@ class Task extends React.Component {
           <div key={task.id} className='box'>
             <div className="tile is-ancestor">
               <div className={`tile is-parent ${(!this.state.showColumns.task_name) ? 'is-hidden' : null}`}>
-              <article className="tile is-child box">
+              <article className="tile is-child">
                 <input
                   className='input'
                   placeholder="Task Name"
@@ -190,7 +192,7 @@ class Task extends React.Component {
               </div>
 
               <div className={`tile is-parent ${(!this.state.showColumns.status) ? 'is-hidden' : null}`}>
-              <article className="tile is-child box">
+              <article className="tile is-child">
                 <div className="select is-hover">
                   <select
                     type='date'
@@ -215,7 +217,7 @@ class Task extends React.Component {
               </div>
 
               <div className={`tile is-parent ${(!this.state.showColumns.start_date) ? 'is-hidden' : null}`}>
-              <article className="tile is-child box">
+              <article className="tile is-child">
                 <input
                     type='date'
                     className='input'
@@ -230,7 +232,7 @@ class Task extends React.Component {
               </div>
 
               <div className={`tile is-parent ${(!this.state.showColumns.end_date) ? 'is-hidden' : null}`}>
-              <article className="tile is-child box">
+              <article className="tile is-child">
                 <input
                     type='date'
                     className='input'
@@ -245,7 +247,7 @@ class Task extends React.Component {
               </div>
 
               <div className={`tile is-parent ${(!this.state.showColumns.users) ? 'is-hidden' : null}`}>
-              <article className="tile is-child box">
+              <article className="tile is-child">
               <div className="select is-hover">
                   <select
                   
@@ -269,7 +271,7 @@ class Task extends React.Component {
               </div>
 
               <div className={`tile is-parent ${(!this.state.showColumns.delete) ? 'is-hidden' : null}`}>
-              <article className="tile is-child box">
+              <article className="tile is-child">
                 <button
                     className='button'
                     id={task.id}
@@ -293,7 +295,7 @@ class Task extends React.Component {
           >
             <div className="tile is-ancestor">
               <div className="tile is-10 is-parent">
-              <article className="tile is-child box">
+              <article className="tile is-child">
                 <input
                   type='input'
                   className='input'
@@ -305,10 +307,10 @@ class Task extends React.Component {
               </article>
               </div>
               <div className="tile is-parent">
-                <article className="tile is-child box">
+                <article className="tile is-child">
                 <div className="is-hover">
                 <div class="control">
-                <button class="button is-primary">Submit</button>
+                <button class="button is-warning is-fullwidth">Submit</button>
               </div>
         </div>
       </article>

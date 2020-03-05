@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import About from './About'
 import Auth from '../../lib/auth'
 import NewBoardButton from '../board/NewBoardButton'
 import SmallBoardCard from '../board/SmallBoardCard'
@@ -13,7 +14,7 @@ class Home extends React.Component {
     errors: ''
   }
 
-
+  newSet = new Set(this.state.user.board_owned)
 
   async componentDidMount() {
     try {
@@ -29,11 +30,12 @@ class Home extends React.Component {
   render() {
     console.log(this.state)
     return (
-      <section>
+      <>
+        {!Auth.isAuthenticated() && <About />}
+        {Auth.isAuthenticated() &&
+          <section>
       <div>
         <div>
-          <h1 className="title">Skarpa</h1>
-          <p>Start your projects today!</p>      
           <div className="container">
             <div className="columns is-mobile is-multiline">
           {Auth.isAuthenticated() && <NewBoardButton />}
@@ -48,7 +50,9 @@ class Home extends React.Component {
         </div>
       
     </section>
-      
+  }
+      </>
+
     )
   }
 }

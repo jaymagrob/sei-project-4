@@ -35,7 +35,7 @@ class Login extends React.Component {
       <section className="is-fullheight-with-navbar hero section_padding">
       <div className="hero-body columns is-fullwidth">
         <div className="column is-quarter-desktop"></div>
-        <div className='column is-three-quarters-mobile is-half-tablet is-one-third-desktop box'>
+        <div className='has-background-info column is-three-quarters-mobile is-half-tablet is-one-third-desktop box'>
           <form onSubmit={this.handleSubmit}>
             <div className="title-underLine">
               <h2 className="subtitle-hero is-4 padding-v-10">login</h2>
@@ -66,7 +66,7 @@ class Login extends React.Component {
             </div>
             <div className="field">
               <div className="control">
-                <button className="button is-primary has-text-white is-fullwidth" type="submit">Login</button>            
+                <button className="button is-primary is-warning is-fullwidth" type="submit">Login</button>            
               </div>
             </div>            
           </form>

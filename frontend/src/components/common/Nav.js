@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import Auth from '../../lib/auth'
-import axios from 'axios'
+import logo from '../../assets/Skarpa_Logo.png'
 
 class Navbar extends React.Component {
   state = { navbarOpen: false, name: null, username: null }
@@ -24,9 +24,9 @@ class Navbar extends React.Component {
     const { navbarOpen } = this.state
 
     return (
-      <nav className="navbar custom_nav">
-        <div className="navbar-brand navbar-logo">
-          <Link className="navbar-brand navbar-item" onClick={this.handleClick} to="/">Skarpa</Link>          
+      <nav className="navbar is-info">
+        <div className="navbar-brand">
+          <Link className="navbar-brand navbar-item" onClick={this.handleClick} to="/"><img src={logo} alt="SKARPA"></img></Link>          
           <a className={`navbar-burger ${navbarOpen ? 'is-active' : ''}`} onClick={this.toggleNavbar}>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -39,15 +39,21 @@ class Navbar extends React.Component {
           <div className="navbar-item navbar-end">
             {Auth.isAuthenticated() &&
             <>
-              <div className="navbar-item">
-                <Link onClick={this.handleClick} to="/">SELECT PROJECT</Link>
-              </div>
-              <div className="navbar-item">
-                <Link onClick={this.handleClick} to="/profile/edit">EDIT PROFILE</Link>
-              </div>
-              <div className="navbar-item">
-                <a onClick={this.handleLogout}>LOGOUT {this.state.name}</a>
-              </div>
+            <div className="navbar-item">
+              <Link onClick={this.handleClick} to="/">SELECT PROJECT</Link>
+            </div>
+            <div className="navbar-item">
+              <Link onClick={this.handleClick} to="/project/new">NEW PROJECT</Link>
+            </div>
+            <div className="navbar-item">
+              <Link onClick={this.handleClick} to="/profile/edit">EDIT PROFILE</Link>
+            </div>
+            <div className="navbar-item">
+              <a onClick={this.handleLogout}>LOGOUT {this.state.name}</a>
+            </div>
+
+
+
             </>
             }
           </div>

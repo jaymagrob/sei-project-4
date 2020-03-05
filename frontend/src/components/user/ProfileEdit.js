@@ -26,37 +26,36 @@ class ProfileEdit extends React.Component {
     }
   }
 
-  // handleSubmit = async e => {
-  //   e.preventDefault()
-  //   const useraData = { ...this.state.data, 
-  //     profileImage: 'https://discountdoorhardware.ca/wp-content/uploads/2018/06/profile-placeholder-3.jpg',
-  //     bio: 'Click edit portfolio to get started editing your profile!',
-  //   }
-  //   try {
-  //     await axios.post('/api/register', userData)
-  //     // this.props.history.push('/login')
-  //     console.log('yeah')
-  //   } catch (err) {
-  //     const { password, password_confirmation, username, email, name } = err.response.data
-  //     const errorObj = {
-  //       username: !username ? null : username[0],
-  //       name: !name ? null : name[0],
-  //       email: !email ? null : email[0],
-  //       password: !password ? null : password[0],
-  //       password_confirmation: !password_confirmation ? null : password_confirmation[0]
-  //     }
-  //     console.log(errorObj)
-  //     this.setState({ errors: errorObj })
-  //   }
-  // }
+  handleSubmit = async e => {
+    e.preventDefault()
+    try {
+        const res = await axios.put('/api/profile/', this.state.user, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      console.log(res.data)
+    } catch (err) {
+      const { password, password_confirmation, username, email, name } = err.response.data
+      const errorObj = {
+        username: !username ? null : username[0],
+        name: !name ? null : name[0],
+        email: !email ? null : email[0],
+        password: !password ? null : password[0],
+        password_confirmation: !password_confirmation ? null : password_confirmation[0]
+      }
+      console.log(errorObj)
+      this.setState({ errors: errorObj })
+    }
+  }
 
-  render() {
-    console.log(this.state.user)
-    const { id, board_owned, boards_assigned, username, first_name, last_name, email, name, profile_image, bio, company, title  } = this.state.user
+  render() {  
     if (!this.state.user) return null
     return (
-      <section>
-        <h1 className="title">Edit Your Profile</h1>
+<section className="is-fullheight-with-navbar hero section_padding">
+      <div className="hero-body columns is-fullwidth">
+        <div className="column is-quarter-desktop"></div>
+        <div className='has-background-info column is-three-quarters-mobile is-half-tablet is-one-third-desktop box'>
+          
+          
         <form onSubmit={this.handleSubmit}>
           <div className="field">
             <label className="label">Name</label>
@@ -144,14 +143,18 @@ class ProfileEdit extends React.Component {
           </div>
 
           <div class="control">
-            <button class="button">Submit</button>
+            <button class="button is-round is-warning is-fullwidth">Submit</button>
           </div>
 
         </form>
-      </section>
-      
+        </div>
+        <div className="column is-quarter-desktop"></div>
+      </div>
+    </section>
     )
   }
 }
 
 export default ProfileEdit
+
+
