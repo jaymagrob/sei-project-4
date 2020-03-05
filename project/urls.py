@@ -18,9 +18,9 @@ from django.urls import path, include
 from .views import index
 
 urlpatterns = [
-    path('', index),
     path('admin/', admin.site.urls),
     path('api/', include('jwt_auth.urls')),
     path('api/boards/', include('boards.urls')),
     path('api/tasks/', include('tasks.urls')),
+    path(r'^.*/$', index),
 ]
