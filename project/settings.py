@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = { 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'project-management-jmr-sei4',
+        'NAME': 'hobby-dev',
         'HOST': 'localhost',
         'PORT': 5432
     }
