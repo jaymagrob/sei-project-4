@@ -18,9 +18,10 @@ class Home extends React.Component {
 
   async componentDidMount() {
     try {
-      const res = await axios.get('/api/profile', {
+      const res = await axios.get('/api/profile/', {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
+      console.log('RES',res)
       this.setState({ user: res.data })
     } catch (err) {
       console.log(err)

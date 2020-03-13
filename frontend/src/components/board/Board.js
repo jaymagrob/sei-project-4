@@ -23,7 +23,7 @@ class Board extends React.Component {
   async componentDidMount() {
     try {
       const id = this.props.match.params.id
-      const res = await axios.get(`/api/boards/${id}`, {
+      const res = await axios.get(`/api/boards/${id}/`, {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
       this.setState({board: res.data})
