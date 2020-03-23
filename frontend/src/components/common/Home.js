@@ -34,23 +34,23 @@ class Home extends React.Component {
       <>
         {!Auth.isAuthenticated() && <About />}
         {Auth.isAuthenticated() &&
-          <section>
-      <div>
-        <div>
-          <div className="container">
-            <div className="columns is-mobile is-multiline">
-          {Auth.isAuthenticated() && <NewBoardButton />}
-            {this.state.user.board_owned.map(board => (
-                <SmallBoardCard key={board.id} {...board} />
-              )
-            )
-          }
-          </div>
-          </div>
-          </div>
-        </div>
-      
-    </section>
+        <section>
+          <div>
+            <div>
+              <div className="container">
+                <section className="columns is-mobile is-multiline">
+              {Auth.isAuthenticated() && <NewBoardButton />}
+                {this.state.user.board_owned.map(board => (
+                    <SmallBoardCard key={board.id} {...board} />
+                  )
+                )
+              }
+              </section>
+              </div>
+              </div>
+            </div>
+            
+        </section>
   }
       </>
 

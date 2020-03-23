@@ -33,7 +33,7 @@ class ImageUpload extends React.Component {
               {this.props.labelText}
             </span>
           </span>
-          <span className="file-name">
+          <span className="file-name has-background-white">
             {this.state.original || 'No image selected'} 
           </span>
         </label>

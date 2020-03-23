@@ -32,7 +32,7 @@ class Board extends React.Component {
     }
 
     try {
-      const res = await axios.get(`/api/profile`, {
+      const res = await axios.get(`/api/profile/`, {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
       this.setState({boards: res.data.boards_assigned})
@@ -41,7 +41,7 @@ class Board extends React.Component {
     }
     
     try {
-      const res = await axios.get('/api/users', {
+      const res = await axios.get('/api/users/', {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
       const users = res.data.map(user => (

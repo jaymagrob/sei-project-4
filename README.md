@@ -1,4 +1,4 @@
-<!-- ![General Assembly Logo](frontend/src/assets/ga-logo.png) -->
+![General Assembly Logo](frontend/src/assets/README_GAlogo.png)
 
 # Software Engineering Immersive – Project 04
 
@@ -20,8 +20,7 @@ Skarpa is a project management app based off of Monday.com. The user can registe
 
     - Deploy the project online 
 
-<!-- add an image of the home screen -->
-<!-- fix the issue with the home screen and make the array [] -->
+![Home Screen: Not Logged In](frontend/src/assets/ss_homepage_loggedout.png)
 
 ## Deployment 
 
@@ -46,7 +45,7 @@ Use the clone button to download the source code. Enter the following commands i
 ```
 
 ## Technologies Used:
-<!-- THIS DONE -->
+
 1. HTML5
 2. Bulma
 3. Javascript
@@ -62,90 +61,109 @@ Use the clone button to download the source code. Enter the following commands i
 6. Cloudinary
 7. Axios
 
+## Planning Process
 
+As this was my first time using a SQL database, I wanted to be as clear as possible with how each model connects with another. This was extremely important as my task model has a relationship with 5 other models.
+
+I found quickdatabasediagrams.com and built a schema to easily visualise how each model has a relationship with each other.
+
+![Database schema](frontend/src/assets/ss_schema.png)
 
 ## User Experience 
 
-The website is a place where users can add places they would like to go to or have visited to their 'to-go' list. The idea is that the site can give users a more visual representation than a traditional to-do list. So it can be used as a reminder of the geographical locations of their favourite places. 
+Skarpa is a project management tool developed to be a clone of Monday.com. A user can add projects known as boards, tasks within those boards and assign users to boards and tasks.
 
-![Map view screenshot](frontend/src/assets/map-view.png)
+![New project screenshot](frontend/src/assets/ss_newprojectpage.png)
 
-With full CRUD functionality, the user also has the ability to update and delete their places or the notes that they have made about their place.
+With full CRUD functionality, the user also has the ability to register, login, create a project, edit project and add, edit and delete tasks within projects.
 
-The user has to be logged in to be able to add a place to their list. 
+The user has to be logged in and can only see and edit boards that are a memeber of.
 
-![Add a place screenshot](frontend/src/assets/add-place.png)
+![Board with tasks screenshot](frontend/src/assets/ss_projectandtask.png)
 
-The below is a code snippet from the create place component. It features a multi-select component from React-Select for categories chosen and an Image Upload component using the Cloudinary API. This means that the user can upload an image from their device rather than pasting in a URL. 
+Above is an image of a board in Skarpa. The user has three others assigned to the board and two tasks that have been created.
 
-The image is posted to Cloudinary where it is assigned a secure URL, the URL is then fetched from Cloudinary and assigned to the image property using setState. It can then be added to the new place that has been created.
+The below is a code snippet from the user multiple selete component. This was created when the board component did mount and the data was passed as a prop to both the board commponent and then each tasks component.
 
-```
-handleUpload({ target: { files } }) {
-    this.setState({ loading: true }, () => { // do this fucntion while loading is true
-      const body = new FormData
-      body.append('file', files[0])
-      body.append('upload_preset', 'qpedrr5c')
-      fetch('https://api.cloudinary.com/v1_1/dpmupgnig/image/upload', { method: 'POST', body, contentType: 'application/json' })
-        .then(res => res.json())  
-        .then(res => {
-          console.log(this.props, 'props')
-          this.setState(
-            { image: res.secure_url, loading: false },
-            this.props.onChange({ target: { name: this.props.name, value: res.secure_url } })
-          )
-        })
-    })
-  }
-  ```
-
-The Multi-Select allows the user to select and add mulitple categories to the place they are adding or editing. The handleMultiSelect function allows the user to set the category ID into state which is what is required by the Place model as shown below
-
-  ```
-
-  handleMultiSelect(selected) {
-    if (!selected) {
-      return this.setState({ data: { ...this.state.data, categories: [] } })
+```JavaScript
+    try {
+      const res = await axios.get('/api/users/', {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      const users = res.data.map(user => (
+        { value: user.id, label: user.name }
+      ))
+      const defaultUser = users.filter(user =>(
+        this.state.board.users.indexOf(user.value) !== -1 || this.state.board.owner == user.value
+      ))       
+      this.setState({ users, defaultUser })
+    } catch (err) {
+      console.log(err)
     }
-    const data = { ...this.state.data, categories: selected.map(sel => sel.id) }
-    console.log(data)
-    this.setState({ data })
-  }
   ```
+
+Pulling all users meant we could us a multi-select to add new users to the board.
+
+  ```jsx
+<div className="field">
+        <label className="form-fields">Users</label>
+        <div className="control">        
+          <Select
+            options={users}
+            value={defaultUser}        
+            isMulti          
+            onChange={(e) => handleMultiChange(e)}
+            onBlur={handleSubmit}
+          />
+        </div>
+      </div>
 ```
-class Place(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    postcode = models.CharField(max_length=10)
-    image = models.CharField(max_length=500, blank=True)
-    description = models.CharField(max_length=100, blank=True)
-    visited = models.BooleanField(default=False)
-    categories = models.ManyToManyField(
-        Category,
-        related_name='places',
-        blank=True # M2M field is a string so this needs to be blank
-    )
-    owner = models.ForeignKey(
-        User,
-        related_name='places',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    ) 
-  ```
 
-  ### Create testing in Insomnia 
+When this was changed in state it would be pushed as a prop to each task on the board that would be able to change the user assigned to task dropdown
 
- ![Create testing screenshot](frontend/src/assets/create-insomnia.png)
+```jsx
+<option value={null}>Not Assigned</option>            
+  {this.props.users.map(user => (
+<option value={user.value}>{user.label}</option>
+  )))}
+```
+
+As shown in the schema, the hardest task in the backend was the tasks model. Four model had a relationship with the task model and due to this planning was nessessary. Without using quickdatabasediagrams.com to visualise the relationships I would of had to redo this model as I hadn't realised users would be a many to many relationship.
+
+```python
+  class Task(models.Model):
+    task_name = models.CharField(max_length=50)
+    task_description = models.CharField(max_length=500, null=True)
+    start_date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
+    group = models.CharField(max_length=50, null=True)
+    status = models.ForeignKey(Task_Status, related_name='task', on_delete=models.SET_NULL, null=True)
+    board = models.ForeignKey(Board, related_name='board_task', null=False, on_delete=models.CASCADE, default=1)  
+    owner = models.ForeignKey(User, related_name='task_owned', null=False, on_delete=models.CASCADE, default=1)
+    users = models.ManyToManyField(User, related_name='task_assigned', blank=True)
+```
+
+
+## Create testing in Insomnia 
+
+ ![Create testing screenshot](frontend/src/assets/ss_insomnia.png)
    
+Due to time constrants I wasn't able to learn and test using Django's build in testing framework. Instead, I used Insomia to get through every API call as it was built and check the following:
 
-As the owner, the user now has the ability to add notes to their place, update it or delete it. They can create and delete notes. 
+* Sending a blank response do I get a response?
+* Do I get the correct response?
+* Do I get the correct data and only what information I need?
+* Can I access the data without authentication?
+* Can I access the data with the wrong authentication?
+* Do I get the correct response when sending no JSON data?
+* Do I get the correct response when sending the wrong JSON data?
+* Do I get the correct data authentication and JSON are correct?
 
- ![Place show screenshot](frontend/src/assets/place-show.png)
+By doing this I discovered:
 
-
-The user can also view places by Category as it thought it would be a useful feature to have a categories index page. By clicking on a category at the top of the page, the user can filter the results to only show places from that category.
-
- ![Catgeories index screenshot](frontend/src/assets/categories-index.png)
+* User API was sending too much information and need to be serialized.
+* Users of other boards could add comments.
+* Register needed better validation as none emails could be added to email
 
 
 ## Reflection and Future improvements 

@@ -20,9 +20,10 @@ class NewBoard extends React.Component {
 
   async componentDidMount() {
     try {
-      const res = await axios.get('/api/users', {
+      const res = await axios.get('/api/users/', {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
       })
+      console.log('LOADED',res.data)
       const users = res.data.map(user => (
         { value: user.id, label: user.name }
       ))
@@ -114,16 +115,16 @@ class NewBoard extends React.Component {
               <label className="form-fields">Budget</label>
               <div className="control">
                 <input
-                  className={`number ${this.state.errors.budget ? 'display' : ''}`}
+                  className={`input is-fullwidth ${this.state.errors.budget ? 'display' : ''}`}
                   placeholder="Budget"
-                  type='number'
+                  type="number"
                   name="budget"
                   onChange={this.handleChange}
                 />
               </div>
               {this.state.errors.budget && <p className="help is-danger">{this.state.errors.budget}</p>}
             </div>
-
+            
             <div className="field">
               <div className="form-fields">Upload Profile Image</div>
               <div className="control">  

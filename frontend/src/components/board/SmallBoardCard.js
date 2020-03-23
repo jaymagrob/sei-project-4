@@ -9,7 +9,7 @@ const  SmallBoardCard = ({image, board_name, description, id}) => (
           <h4 className="card-header-title">{board_name}</h4>
         </div>
         <div className="card-content">
-          <h5 className="title is-6">{description}</h5>
+          <p className="is-6 card-text">{ description || 'No description'}</p>
         </div>
       </div>
     </Link>
