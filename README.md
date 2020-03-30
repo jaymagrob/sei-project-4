@@ -10,13 +10,13 @@ Skarpa is a project management app based off of Monday.com. The user can registe
 
 ## Brief
 
-    - Build a full-stack application with backend and front-end using Django with PostgresQL and ReactJS.
+    - Build a full-stack application with backend and front-end using Django with PostgreSQL and ReactJS.
 
-    - Work with at least 3 models, incorporating nested or populated serializers / one-to-one and manay-to many models
+    - Work with at least 3 models, incorporating nested or populated serializers/one-to-one and many-to-many models
 
-    - Incorporate CRUD funtionality 
+    - Incorporate CRUD functionality 
 
-    - Establish a user journey and wireframes that clearly show which elements are MVP (CRUD fucntionality) and which elements are bonus features
+    - Establish a user journey and wireframes that clearly show which elements are MVP (CRUD functionality) and which elements are bonus features
 
     - Deploy the project online 
 
@@ -39,7 +39,7 @@ Use the clone button to download the source code. Enter the following commands i
 
 <!— Run the app on localhost:4000 : —> $ yarn serve:back 
 
-<!— Check the console for any issues and if there are any then check the package.json for any dependancies missing —>
+<!— Check the console for any issues and if there are any then check the package.json for any dependencies missing —>
 
 <!- Navigate to http://localhost:4000/>
 ```
@@ -52,7 +52,7 @@ Use the clone button to download the source code. Enter the following commands i
    * ECMAScript6
    * React.js
 4. SQL
-   * PostgresQL
+   * PostgreSQL
    * Django
    * Python
 5. Testing
@@ -75,15 +75,15 @@ Skarpa is a project management tool developed to be a clone of Monday.com. A use
 
 ![New project screenshot](frontend/src/assets/ss_newprojectpage.png)
 
-With full CRUD functionality, the user also has the ability to register, login, create a project, edit project and add, edit and delete tasks within projects.
+With full CRUD functionality, the user also can register, login, create a project, edit the project and add, edit and delete tasks within projects.
 
-The user has to be logged in and can only see and edit boards that are a memeber of.
+The user has to be logged in and can only see and edit boards that are a member of.
 
 ![Board with tasks screenshot](frontend/src/assets/ss_projectandtask.png)
 
 Above is an image of a board in Skarpa. The user has three others assigned to the board and two tasks that have been created.
 
-The below is a code snippet from the user multiple selete component. This was created when the board component did mount and the data was passed as a prop to both the board commponent and then each tasks component.
+Below is a code snippet from the user multiple select components. This was created when the board component did mount and the data was passed as a prop to both the board component and then each tasks component.
 
 ```JavaScript
     try {
@@ -102,7 +102,7 @@ The below is a code snippet from the user multiple selete component. This was cr
     }
   ```
 
-Pulling all users meant we could us a multi-select to add new users to the board.
+Pulling all users meant we could use a multi-select to add new users to the board.
 
   ```jsx
 <div className="field">
@@ -119,7 +119,7 @@ Pulling all users meant we could us a multi-select to add new users to the board
       </div>
 ```
 
-When this was changed in state it would be pushed as a prop to each task on the board that would be able to change the user assigned to task dropdown
+When this was changed in the state it would be pushed as a prop to each task on the board that would be able to change the user assigned to task dropdown
 
 ```jsx
 <option value={null}>Not Assigned</option>            
@@ -128,7 +128,7 @@ When this was changed in state it would be pushed as a prop to each task on the 
   )))}
 ```
 
-As shown in the schema, the hardest task in the backend was the tasks model. Four model had a relationship with the task model and due to this planning was nessessary. Without using quickdatabasediagrams.com to visualise the relationships I would of had to redo this model as I hadn't realised users would be a many to many relationship.
+As shown in the schema, the hardest task in the backend was the tasks model. Four model had a relationship with the task model and due to this planning was necessary. Without using quickdatabasediagrams.com to visualise the relationships I would have had to redo this model as I hadn't realised users would be a many-to-many relationship.
 
 ```python
   class Task(models.Model):
@@ -148,7 +148,7 @@ As shown in the schema, the hardest task in the backend was the tasks model. Fou
 
  ![Create testing screenshot](frontend/src/assets/ss_insomnia.png)
    
-Due to time constrants I wasn't able to learn and test using Django's build in testing framework. Instead, I used Insomia to get through every API call as it was built and check the following:
+Due to time constraints, I wasn't able to learn and test using Django's build in the testing framework. Instead, I used Insomnia to get through every API call as it was built and check the following:
 
 * Sending a blank response do I get a response?
 * Do I get the correct response?
@@ -163,15 +163,25 @@ By doing this I discovered:
 
 * User API was sending too much information and need to be serialized.
 * Users of other boards could add comments.
-* Register needed better validation as none emails could be added to email
+* Register needed better validation as none emails could be added to an email.
 
 
-## Reflection and Future improvements 
+## Reflection
 
-Overall, I was pleased with the outcome of my project. I had planned a SQL backend and knew how every model would connect with each other. There were no referencing circles or issue with nested serializers. 
+### Wins
 
-I have leart a lot but I am now more aware of my own limitations. I had too many plans and ideas for a one person person with a 7 day time limit. In the end I had to scrape some of the backend to focus on making that I did have on the frontend work in all situations.
+* Clear plan was created so the backend development was faster than expected. I had planned a SQL backend and knew how every model would connect.
+* There were no referencing circles or issue with nested serializers.
+* App built in 7 days was an MVP and had some extra features.
 
-I would have liked to implement testing for both the Django backend and the React frontend, to build on what I had done in terms of back end development testing in Insomnia. 
+### Challenges
 
-There are 7 models in my backend but not all of them made it into the frontend of the project. I had an ambitous plan and did not factor a bluffer for issues that could occur. It is due to this that task history is missing, task comments are missing and 
+* Feature scope was a problem. As I'd managed to make the backend to time, I added more features instead of moving onto the frontend and building an MVP.
+* In the end, I had to scrape some of the backend to focus on making that I did have on the frontend work in all situations.
+* There's a bug when selecting a user that sometimes happens and is hard to isolate. This was discovered by a user and I am finding it hard to recreate what they did or why it happened.
+
+### Future Improvements
+
+* I would have liked to implement testing for both the Django backend and the React frontend, to build on what I had done in terms of back end development testing in Insomnia. 
+* There are 7 models in my backend but not all of them made it into the frontend of the project. I had an ambitious plan and did not factor a bluffer for issues that could occur. It is due to this that task history is missing, task comments are missing and 
+* I would have liked to of used WebSocket instead of HTTP requests for minor changes to a project to reduce overhead.
